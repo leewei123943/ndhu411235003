@@ -1,0 +1,37 @@
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        int pivot = nums[rand() % nums.size()];
+        
+        vector<int> big, equal, small;
+        
+        for (int i = 0; i < nums.size(); i++) 
+        {
+            int x = nums[i];
+            if (x > pivot)      
+            {
+                big.push_back(x);
+            }
+            else if (x == pivot) 
+            {
+                equal.push_back(x);
+            }
+            else
+            {
+            small.push_back(x);
+            }
+        }
+        
+        if (k <= big.size()) 
+        {
+            return findKthLargest(big, k);
+        }
+        
+        if (k <= big.size() + equal.size()) 
+        {
+            return pivot;
+        }
+        
+        return findKthLargest(small, k - big.size() - equal.size());
+    }
+};
